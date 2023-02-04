@@ -5,7 +5,7 @@ set -eu
 function generate_standard() {
     local BODY=""
     for ((i = 1; i <= ${2}; i++)); do
-        BODY+="<img src='../../../images/${1}/${1}_${i}.svg' />"
+        BODY+="<img src='../../../images/${1}/${1}_${i}.svg'>"
     done
     cp base.html standard/${BASENAME}/${BASENAME}_${2}.html
     sed -i -e "s|__title__|Data URL scheme を使わないHTML ${1} ${2}枚|g" standard/${BASENAME}/${BASENAME}_${2}.html
@@ -23,7 +23,7 @@ function generate_dataurl() {
         [[ -n ${TEMPFILE-} ]] && rm -f "$TEMPFILE"
     }
 
-    echo "<img src='data:image/svg+xml;base64,$(base64 -w 0 ../images/${1}.svg)' />" >>${IMG_TEMPFILE}
+    echo "<img src='data:image/svg+xml;base64,$(base64 -w 0 ../images/${1}.svg)'>" >>${IMG_TEMPFILE}
 
     ditits=${#2}
     for ((i = 0; i <= ${2}; i++)); do
