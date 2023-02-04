@@ -15,18 +15,20 @@ function generate_standard() {
 function generate_dataurl() {
     cp base.html dataurl/${BASENAME}/${BASENAME}_${2}.html
     sed -i -e "s|__title__|Data URL scheme を使ったHTML ${1} ${2}枚|g" dataurl/${BASENAME}/${BASENAME}_${2}.html
-    local IMG_TAG
-    IMG_TAG="<img src='data:image/svg+xml;base64,$(base64 -w 0 ../images/${1}.svg)' />"
-    TEMPFILE=$(mktemp)
 
+    IMG_TEMPFILE=$(mktemp)
+    TEMPFILE=$(mktemp)
     atexit() {
+        [[ -n ${IMG_TEMPFILE-} ]] && rm -f "$IMG_TEMPFILE"
         [[ -n ${TEMPFILE-} ]] && rm -f "$TEMPFILE"
     }
+
+    echo "<img src='data:image/svg+xml;base64,$(base64 -w 0 ../images/${1}.svg)' />" >>${IMG_TEMPFILE}
 
     ditits=${#2}
     for ((i = 0; i <= ${2}; i++)); do
         if [[ $i -ne 0 ]]; then
-            echo ${IMG_TAG} >>$TEMPFILE
+            cat "${IMG_TEMPFILE}" >>"${TEMPFILE}"
         fi
         printf "\r\t[%${ditits}d/%d] Generating HTML with ${2} ${BASENAME} images." $i $2
     done
