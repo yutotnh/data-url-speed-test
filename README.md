@@ -24,3 +24,20 @@ bash generate_image.sh
 cd ../html
 bash generate_html.sh
 ```
+
+### サーバー側(Apache)の設定
+
+今回利用する画像(SVG)は転送時に圧縮されると容量に対して転送量が非常に小さくなるので、Apacheの設定を変更し、圧縮を行わないようにする
+
+#### 設定方法例
+
+マシンの情報
+
+- Raspberry Pi 4 4GB
+- Raspberry Pi OS (64-bit)
+- Apache/2.4.54 (Debian)
+
+```bash
+sudo nano /etc/apache2/apache2.conf # 最後尾に 「SetEnv no-gzip dont-vary」を追加
+sudo service apache2 restart
+```
