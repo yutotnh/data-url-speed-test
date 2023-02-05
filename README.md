@@ -16,6 +16,8 @@ Data URL scheme を使った場合と使わなかった場合とでHTMLの表示
 
 ### データの生成
 
+以下の手順で、画像とHTMLを生成し、data-url-speed-testフォルダを公開する
+
 ```bash
 git clone https://github.com/yutotnh/data-url-speed-test.git
 cd data-url-speed-test
